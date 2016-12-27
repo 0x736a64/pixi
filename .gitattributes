@@ -14,3 +14,7 @@
 *.pyc 		binary
 *.pyd		binary
 *.pyo 		binary
+
+# Linguist settings
+*.py linguist-language=Python
+pixi/static/css/pixi.css linguist-vendored=false
