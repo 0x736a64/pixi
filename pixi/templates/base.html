@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html>
+  <head>
+    <title>
+      Pixi - web wrapper for ImageNet Classification
+    </title>
+    <meta charSet="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Mono"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="{% static "css/pixi.css" %}">
+  </head>
+  <body>
+    <header class="header">
+      <div class="container-lrg flex">
+        <div class="col-4">
+          <div>
+            <a class="logo">
+              Pixi
+            </a>
+            <p class="">a web wrapper for <a href="http://pjreddie.com/darknet/imagenet/" target="_blank">ImageNet Classification</a>.</p>
+          </div>
+        </div>
+        <div class="col-8">
+          <h1 class="heading">
+            Upload a graphic to see what a neural network thinks it might be.
+          </h1>
+          <div class="ctas">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+              <input type="file" name="image">
+              <button type="submit">Upload</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="feature2">
+      <div class="container-lrg flex">
+        <div class="col-12" id="content">
+        {% block content %}{% endblock %}
+        </div>
+      </div>
+    </div>
+    <div class="socialproof">
+      <div class="container-lrg">
+        <div class="flex text-center">
+          <div class="col-12">
+            <h6 class="heading">
+              {{count}}
+            </h6>
+            <b class="paragraph">
+              Guesses
+            </b>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="container-sml">
+        <div class="col-12 text-center">
+          <div>
+            <p>Thanks to <a href="http://pjreddie.com/darknet/" target="_blank">Darknet</a> for powering this <i>black magic sorcery</i>.</p>
+          </div>
+          <br>
+          <div>
+            <p>Made by <span class="copy"><a href="https://github.com/0x736a64/" target="_blank">0x736a64</a></span> with <i class="fa fa-heart"></i></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

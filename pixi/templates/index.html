@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% if output %}
+    <div id="output">
+      {{x}}
+      {% for line in output %}
+        <p>{{line}}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+  
+  {% if error %}
+    <div id="error">{{ error }}</div>
+  {% endif %}
+{% endblock %}
