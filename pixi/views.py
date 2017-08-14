@@ -1,8 +1,9 @@
 """pixi Views
 
 """
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, STDOUT
 import sqlite3
+import re
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
 
@@ -41,25 +42,35 @@ def index(request):
         temp = FileSystemStorage()
         name = temp.save(image.name, image)
         filepath = temp.url(name)
+
         # run darknet subprocess with given image
-        darknet = 'cd darknet && ./darknet classify cfg/tiny.cfg tiny.weights '
-        process = Popen(darknet + '../pixi' + filepath, shell=True, stdout=PIPE, stderr=PIPE)
+        darknet = 'cd darknet && ./darknet classifier predict cfg/imagenet1k.data cfg/tiny.cfg cfg/tiny.weights '
+        process = Popen(darknet + '../pixi' + filepath, shell=True, stdout=PIPE, stderr=STDOUT)
+
         #store stdout to output array
         output = []
+
         while True:
             line = process.stdout.readline()
             if line != '':
                 output.append(line.rstrip())
             else:
                 break
-        del output[0]
+
+        r = re.compile(".*:")
+        filtered = filter(r.match, output)
+
+        del filtered[0]
+
         # store record and remove uploaded image from temp storage
-        write(', '.join(output).strip(':'))
+        write(', '.join(filtered).strip(':'))
         temp.delete(image.name)
+        
         # render output
-        return render(request, 'thanks.html', {
-            'output': output,
+        return render(request, 'output.html', {
+            'output': filtered,
             'count': count()
         })
+
     #render index
     return render(request, 'index.html', {'count': count()})
