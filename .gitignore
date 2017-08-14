@@ -38,3 +38,4 @@ venv/
 ENV/
 
 pixi/settings.py
+pixi/media
