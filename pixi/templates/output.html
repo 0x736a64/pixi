@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Predictions:</h2>
+  {% if output %}
+    <div id="output">
+      {% for line in output %}
+        <p>{{line}}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+  
+  {% if error %}
+    <div id="error">{{ error }}</div>
+  {% endif %}
+
+  <a href="/">Try again?</a>
+{% endblock %}
